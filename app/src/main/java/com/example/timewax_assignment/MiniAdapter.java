@@ -1,7 +1,6 @@
 package com.example.timewax_assignment;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +48,13 @@ public class MiniAdapter extends BaseAdapter {
         if (view == null){
             view = inflater.inflate(R.layout.selected_item_row, null);
             container = new MiniContainer();
-            container.name = view.findViewById(R.id.nameTxtView);
-            container.price = view.findViewById(R.id.priceTxtView);
-            container.totalPrice = view.findViewById(R.id.totalPrice);
-            container.quantity = view.findViewById(R.id.numberTxtView);
-            container.morebtn = view.findViewById(R.id.morebtn);
-            container.lessbtn = view.findViewById(R.id.lessbtn);
-            container.removebtn = view.findViewById(R.id.removebtn);
+            container.name = view.findViewById(R.id.nameTxtViewCart);
+            container.price = view.findViewById(R.id.priceTxtViewCart);
+            container.totalPrice = view.findViewById(R.id.totalPriceOfRowCart);
+            container.quantity = view.findViewById(R.id.numberTxtViewCart);
+            container.morebtn = view.findViewById(R.id.morebtnCart);
+            container.lessbtn = view.findViewById(R.id.lessbtnCart);
+            container.removebtn = view.findViewById(R.id.removebtnCart);
             container.position = view.findViewById(R.id.positionOnCart);
             view.setTag(container);
         } else {
@@ -64,8 +63,8 @@ public class MiniAdapter extends BaseAdapter {
 
         Product p = (Product) getItem(position);
         container.name.setText(p.name);
-        container.price.setText(String.format("%.2f", p.price)+"€");
-        container.totalPrice.setText(String.format("= %.2f", p.getTotalPrice())+"€");
+        container.price.setText(String.format("%.2f€", p.price));
+        container.totalPrice.setText(String.format("= %.2f€", p.getTotalPrice()));
         container.quantity.setText(p.quantity +"");
         container.position.setText(position+"");
 

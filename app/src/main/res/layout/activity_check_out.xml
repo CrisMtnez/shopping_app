@@ -6,4 +6,115 @@
     android:layout_height="match_parent"
     tools:context=".CheckOutActivity">
 
+    <ListView
+        android:id="@+id/shoppingListFinal"
+        android:layout_width="398dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/yourCartMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text='Verify your order and click "Finish purchase"'
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/shoppingListFinal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.695" />
+
+    <TextView
+        android:id="@+id/haveDiscount"
+        android:layout_width="202dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:singleLine="false"
+        android:text="Do you have any discount coupons? Introduce the code down below!"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        app:fontFamily="@font/baloo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shoppingListFinal" />
+
+    <EditText
+        android:id="@+id/discountInput"
+        android:layout_width="202dp"
+        android:layout_height="36dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="none"
+        android:text="discount code"
+        android:textColor="#D5D6D6"
+        app:layout_constraintStart_toStartOf="@+id/haveDiscount"
+        app:layout_constraintTop_toBottomOf="@+id/haveDiscount" />
+
+    <TextView
+        android:id="@+id/totalcosttxt"
+        android:layout_width="115dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Total cost:"
+        android:textColor="@color/colorPrimaryDark"
+        app:fontFamily="@font/baloo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shoppingListFinal" />
+
+    <TextView
+        android:id="@+id/totalCosts"
+        android:layout_width="97dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="12.50€"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/totalcosttxt"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="@+id/totalcosttxt"
+        app:layout_constraintTop_toBottomOf="@+id/totalcosttxt" />
+
+    <Button
+        android:id="@+id/finishPurchaseBtn"
+        android:layout_width="144dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginBottom="17dp"
+        android:background="@color/colorAccent"
+        android:text="Finish Purchase"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/totalcosttxt" />
+
+    <Button
+        android:id="@+id/applydiscountbtn"
+        android:layout_width="143dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="Apply discount"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/discountInput"
+        app:layout_constraintStart_toStartOf="@+id/discountInput"
+        app:layout_constraintTop_toBottomOf="@+id/discountInput" />
 </androidx.constraintlayout.widget.ConstraintLayout>

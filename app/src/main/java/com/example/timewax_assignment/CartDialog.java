@@ -1,12 +1,12 @@
 package com.example.timewax_assignment;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,17 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class CartDialog extends DialogFragment {
 
     private Button checkOut,removeAll;
     private ListView itemsList;
-    TextView totalCart;
+    private TextView totalCart;
     private MiniAdapter adapter;
 
 //    @Override
@@ -49,7 +47,7 @@ public class CartDialog extends DialogFragment {
         itemsList.setAdapter(adapter);
         checkOut = view.findViewById(R.id.checkOutButton);
         removeAll = view.findViewById(R.id.removeAllBtn);
-        totalCart = view.findViewById(R.id.totalTxtView);
+        totalCart = view.findViewById(R.id.totalPriceOfCart);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.getDialog().setCanceledOnTouchOutside(true);
         checkOut.setOnClickListener(new View.OnClickListener() {
@@ -62,29 +60,55 @@ public class CartDialog extends DialogFragment {
         removeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.selectedProducts.clear();
-                //y eliminar la vista
+                confirmRemove();
             }
         });
 
         if (MainActivity.selectedProducts.size()==0){
-            removeAll.setVisibility(View.INVISIBLE);
-            totalCart.setText("Your cart is empty!");
-            totalCart.setTextSize(24);
-            totalCart.setGravity(View.TEXT_ALIGNMENT_CENTER);
+            emptyCart();
+        } else {
+            updateTotalPrice();
         }
 
         return view;
+    }
+
+    public void confirmRemove(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Emptying cart").setMessage("Do you want to remove all items from your cart?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainActivity.selectedProducts.clear();
+                        adapter.notifyDataSetChanged();
+                        emptyCart();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).setIcon(android.R.drawable.ic_dialog_alert).create().show();
+    }
+
+    public void emptyCart(){
+        removeAll.setVisibility(View.INVISIBLE);
+        totalCart.setText("Your cart is empty!");
+        totalCart.setTextSize(24);
+        totalCart.setGravity(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    public void updateTotalPrice(){
+        double t = 0;
+        for (Product p : MainActivity.selectedProducts) {
+            t += p.getTotalPrice();
+        }
+        totalCart.setText(String.format("TOTAL = %.2f €", t));
     }
 
     public void goToCheckOut(){
         Intent intent = new Intent(getContext(),CheckOutActivity.class);
         startActivity(intent);
         dismiss();
-    }
-
-    public void setSelectedProducts(ArrayList<Product> selectedProducts){
-        MainActivity.selectedProducts = selectedProducts;
     }
 
 //    @Nullable

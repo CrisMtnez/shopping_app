@@ -120,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/numberTxtView"
         app:layout_constraintTop_toBottomOf="@+id/priceTxtView"
-        android:onClick="addBtnHandler"/>
+        android:onClick="addBtnHandler" />
 
     <TextView
         android:id="@+id/priceTxtView"

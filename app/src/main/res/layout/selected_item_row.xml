@@ -8,21 +8,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/numberTxtView2"
+        android:id="@+id/xTxtView"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:gravity="center"
         android:text="x"
         android:textAlignment="center"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/numberTxtView"
-        app:layout_constraintEnd_toStartOf="@+id/numberTxtView"
-        app:layout_constraintStart_toEndOf="@+id/priceTxtView"
-        app:layout_constraintTop_toTopOf="@+id/numberTxtView" />
+        app:layout_constraintBottom_toBottomOf="@+id/numberTxtViewCart"
+        app:layout_constraintEnd_toStartOf="@+id/numberTxtViewCart"
+        app:layout_constraintStart_toEndOf="@+id/priceTxtViewCart"
+        app:layout_constraintTop_toTopOf="@+id/numberTxtViewCart" />
 
     <TextView
-        android:id="@+id/nameTxtView"
-        android:layout_width="wrap_content"
+        android:id="@+id/nameTxtViewCart"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -33,29 +33,32 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/morebtn"
+        android:id="@+id/morebtnCart"
         android:layout_width="38dp"
         android:layout_height="26dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/numberTxtView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/numberTxtView"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="moreBtnCartHandler"
+        app:layout_constraintEnd_toStartOf="@+id/totalPriceOfRowCart"
+        app:layout_constraintLeft_toRightOf="@id/nameTxtViewCart"
+        app:layout_constraintStart_toEndOf="@id/nameTxtViewCart"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/arrow_up_float" />
 
     <ImageButton
-        android:id="@+id/lessbtn"
+        android:id="@+id/lessbtnCart"
         android:layout_width="38dp"
         android:layout_height="26dp"
         android:layout_marginBottom="4dp"
+        android:onClick="lessBtnCartHandler"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/numberTxtView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/numberTxtView"
+        app:layout_constraintEnd_toEndOf="@+id/numberTxtViewCart"
+        app:layout_constraintStart_toStartOf="@+id/numberTxtViewCart"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
     <TextView
-        android:id="@+id/numberTxtView"
+        android:id="@+id/numberTxtViewCart"
         android:layout_width="38dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
@@ -64,49 +67,51 @@
         android:text="1"
         android:textAlignment="center"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/lessbtn"
-        app:layout_constraintEnd_toStartOf="@+id/totalPrice"
-        app:layout_constraintStart_toEndOf="@+id/nameTxtView"
-        app:layout_constraintTop_toBottomOf="@+id/morebtn"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/lessbtnCart"
+        app:layout_constraintEnd_toEndOf="@+id/morebtnCart"
+        app:layout_constraintStart_toStartOf="@+id/morebtnCart"
+        app:layout_constraintTop_toBottomOf="@+id/morebtnCart"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/priceTxtView"
+        android:id="@+id/priceTxtViewCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="1.25€"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/numberTxtView"
+        app:layout_constraintBottom_toBottomOf="@+id/numberTxtViewCart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/numberTxtView" />
+        app:layout_constraintTop_toTopOf="@+id/numberTxtViewCart" />
 
     <TextView
-        android:id="@+id/totalPrice"
+        android:id="@+id/totalPriceOfRowCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toEndOf="@+id/numberTxtViewCart"
+        app:layout_constraintLeft_toRightOf="@id/numberTxtViewCart"
         android:text="= 1.25€"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/lessbtn"
-        app:layout_constraintEnd_toStartOf="@+id/removebtn"
-        app:layout_constraintTop_toTopOf="@+id/morebtn" />
+        app:layout_constraintBottom_toBottomOf="@+id/lessbtnCart"
+        app:layout_constraintEnd_toStartOf="@+id/removebtnCart"
+        app:layout_constraintTop_toTopOf="@+id/morebtnCart" />
 
     <ImageButton
-        android:id="@+id/removebtn"
+        android:id="@+id/removebtnCart"
         android:layout_width="43dp"
         android:layout_height="41dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="removeBtnHandler"
+        app:layout_constraintStart_toEndOf="@+id/totalPriceOfRowCart"
+        app:layout_constraintEnd_toStartOf="@+id/positionOnCart"
+        app:layout_constraintLeft_toRightOf="@id/totalPriceOfRowCart"
+        app:layout_constraintBottom_toBottomOf="@+id/totalPriceOfRowCart"
+        app:layout_constraintTop_toTopOf="@+id/totalPriceOfRowCart"
         app:srcCompat="@android:drawable/ic_delete" />
 
     <TextView
@@ -116,7 +121,19 @@
         android:text="0"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageButton
+        android:id="@+id/removebtnCartCopy"
+        android:layout_width="43dp"
+        android:layout_height="41dp"
+        android:onClick="removeBtnHandler"
+        app:layout_constraintStart_toStartOf="@+id/removebtnCart"
+        app:layout_constraintEnd_toEndOf="@+id/removebtnCart"
+        app:layout_constraintLeft_toLeftOf="@id/removebtnCart"
+        app:layout_constraintBottom_toBottomOf="@+id/removebtnCart"
+        app:layout_constraintTop_toTopOf="@+id/removebtnCart"
+        app:srcCompat="@android:drawable/ic_delete" />
 
     <View
         android:id="@+id/divider"

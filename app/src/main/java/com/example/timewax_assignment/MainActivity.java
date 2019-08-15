@@ -3,15 +3,17 @@ package com.example.timewax_assignment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv;
 //    private MiniAdapter cartList;
     private CartDialog cartDialog;
-    private ImageButton more,less;
-    private TextView numberShown;
+//    private ImageButton more,less;
+    private TextView numberShown,totalProduct;
     private Button yourCart;
     public int itemIndex;
 
@@ -40,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
 //        ListView lvSel = findViewById(R.id.selectedListView);
 //        lvSel.setAdapter(cartList);
-        more = findViewById(R.id.morebtn);
-        less = findViewById(R.id.lessbtn);
+//        more = findViewById(R.id.morebtn);
+//        less = findViewById(R.id.lessbtn);
         yourCart = findViewById(R.id.checkCartBtn);
         numberShown = findViewById(R.id.numberTxtView);
 
@@ -54,14 +56,20 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    public void quantityChange(int newQuantity, View v){
+    public void quantityChange(int newQuantity, ArrayList<Product> productsList, int indexOfnShown, View v){
         if (newQuantity<=1000 && newQuantity>0){
             ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
-            numberShown = (TextView)parentRow.getChildAt(6); //numOfItems
+            numberShown = (TextView)parentRow.getChildAt(indexOfnShown); //numOfItems
             productsList.get(itemIndex).setQuantity(newQuantity);
             numberShown.setText(newQuantity+"");
 //            Log.e("**** quantityChange","index = " +itemIndex+ "  | new quantity = " + newQuantity);
         }
+    }
+
+    public void totalPriceOfProduct(Product p, int indexOfnShown, View v){
+        ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
+        totalProduct = (TextView)parentRow.getChildAt(indexOfnShown);
+        totalProduct.setText(String.format("= %.2f€", p.getTotalPrice()));
     }
 
     public void addBtnHandler(View v){
@@ -69,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         //The row the clicked button is in
         ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
         itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(9)).getText().toString());
-
+        Button addbtn = (Button)parentRow.getChildAt(7);
+//        addbtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         ArrayList <String> itemsOnCart = Product.getNamesOfProducts(selectedProducts);
         if (itemsOnCart.contains(productsList.get(itemIndex).name)){
             int i = itemsOnCart.indexOf(productsList.get(itemIndex).name);
@@ -85,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
 //        Log.e("**** quantity",productsList.get(itemIndex).getQuantity()+"");
 //        Log.e("**** addBtnHandler","actual index = " +itemIndex);
         yourCart.setText("Your cart ("+selectedProducts.size()+")");
-        quantityChange(1,v);
+        Toast.makeText(this,String.format("%d %s(s) added to your cart",
+                productsList.get(itemIndex).getQuantity(),productsList.get(itemIndex).name),Toast.LENGTH_SHORT).show();
+        quantityChange(1,productsList,6,v);
     }
 
     public void moreBtnHandler(View v){
@@ -107,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(9)).getText().toString());
 //        Log.e("**** moreBtnHandler","actual index = " +itemIndex);
-        quantityChange(productsList.get(itemIndex).getQuantity()+1,v);
+        quantityChange(productsList.get(itemIndex).getQuantity()+1,productsList,6,v);
     }
 
     public void lessBtnHandler(View v){
@@ -115,7 +126,34 @@ public class MainActivity extends AppCompatActivity {
         itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(9)).getText().toString());
 //        less = (ImageButton)parentRow.getChildAt(4); //lessbtn
 //        Log.e("**** lessBtnHandler","actual index = " +itemIndex);
-        quantityChange(productsList.get(itemIndex).getQuantity()-1,v);
+        quantityChange(productsList.get(itemIndex).getQuantity()-1,productsList,6,v);
+    }
+
+    public void removeBtnHandler(View v){
+        ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
+        itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(8)).getText().toString());
+        selectedProducts.remove(itemIndex);
+        parentRow.removeView(v);
+        cartDialog.updateTotalPrice();
+        if (selectedProducts.size()==0)
+            cartDialog.emptyCart();
+        yourCart.setText("Your cart ("+selectedProducts.size()+")");
+    }
+
+    public void moreBtnCartHandler(View v){
+        ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
+        itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(8)).getText().toString());
+        quantityChange(selectedProducts.get(itemIndex).getQuantity()+1,selectedProducts,4,v);
+        totalPriceOfProduct(selectedProducts.get(itemIndex),6,v);
+        cartDialog.updateTotalPrice();
+    }
+
+    public void lessBtnCartHandler(View v){
+        ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
+        itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(8)).getText().toString());
+        quantityChange(selectedProducts.get(itemIndex).getQuantity()-1,selectedProducts,4,v);
+        totalPriceOfProduct(selectedProducts.get(itemIndex),6,v);
+        cartDialog.updateTotalPrice();
     }
 
     public void checkCartHandler(View v){
@@ -123,6 +161,13 @@ public class MainActivity extends AppCompatActivity {
       cartDialog.show(getSupportFragmentManager(),"");
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            yourCart.setText("Your cart ("+selectedProducts.size()+")");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,10 +183,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.logout:
-                finish();
-                System.exit(0);
+                confirmLeaving();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void confirmLeaving(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Leaving Kwik-E-Smart").setMessage("Are you sure you want to close Kwik-E-Smart?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                        System.exit(0);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).setIcon(android.R.drawable.ic_dialog_alert).create().show();
     }
 }

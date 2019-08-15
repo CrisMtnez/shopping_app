@@ -6,13 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class CheckOutActivity extends AppCompatActivity {
+
+    MyAdapter adapter;
+    ListView finalList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
+        adapter = new MyAdapter(this,MainActivity.selectedProducts);
+        finalList = findViewById(R.id.shoppingListFinal);
+        finalList.setAdapter(adapter);
     }
 
     @Override

@@ -14,10 +14,12 @@ import java.util.ArrayList;
 
 public class MyAdapter extends BaseAdapter {
     ArrayList<Product> list;
+    Context context;
 //    ArrayList<Product> selectedProducts;
     LayoutInflater inflater;
 
     public MyAdapter(Context context, ArrayList<Product> list) {
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
 //        this.selectedProducts = list;
@@ -52,6 +54,7 @@ public class MyAdapter extends BaseAdapter {
             container.morebtn = view.findViewById(R.id.morebtn);
             container.lessbtn = view.findViewById(R.id.lessbtn);
             container.addbtn = view.findViewById(R.id.addbtn);
+//            container.addbtn.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.btn_states));
             container.position = view.findViewById(R.id.position);
             view.setTag(container); //sets the row container
         } else {
@@ -61,7 +64,7 @@ public class MyAdapter extends BaseAdapter {
         container.photo.setImageResource(p.image);
         container.name.setText(p.name);
         container.description.setText(p.description);
-        container.price.setText(String.format("%.2f", p.price)+"€");
+        container.price.setText(String.format("%.2f€", p.price));
         container.quantity.setText(p.quantity +"");
         container.position.setText(position+"");
 
