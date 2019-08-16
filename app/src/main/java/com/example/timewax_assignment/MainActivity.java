@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -264,8 +265,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Leaving Kwik-E-Smart").setMessage("Are you sure you want to close Kwik-E-Smart?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                        System.exit(0);
+                        Intent backHome = new Intent(Intent.ACTION_MAIN);
+                        backHome.addCategory( Intent.CATEGORY_HOME );
+                        backHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(backHome);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
