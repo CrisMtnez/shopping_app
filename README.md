@@ -6,11 +6,13 @@ Simple app emulating a shopping cart in an online shop. Features:
 - Quantity of items can be incremented or decremented before adding them to the cart
 - You can leave the app clicking on the exit button on the menu, after a confirmation
 - Quantity of different items added is displayed next to the bottom "your cart"
+- The maximum quantity of an item that you can add to your cart is 1000
 - Cart can be checked while shopping with a click on the "your cart" button. A dropdown window will be displayed. To close the window you can either click on the back button of your phone or on one of the sides of the displayed window (not above it)
 
 # On the cart window:
 - Items can be removed from the cart
-- Quantity of items can be also incremented or decremented
+- Quantity of items can be also incremented (to 1000) or decremented (to 1)
+- You cannot decrement an item to 0, to remove it from your cart you have to click on the 'X'
 - All items can be removed from the cart at once clicking "Remove all"
 - Total price of a number of items added to the cart is calculated when the quantity of products added is changed
 - Total price of all the products of the cart is also calculated in real time
