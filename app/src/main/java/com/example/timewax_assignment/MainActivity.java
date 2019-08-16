@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView numberShown,totalProduct;
     private Button yourCart;
     public int itemIndex, productId;
+    public static final int MAX_QUANTITY=1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
      * @param v the element that fires the event
      */
     public void quantityChange(int newQuantity, ArrayList<Product> productsList, int indexOfnShown, View v){
-        if (newQuantity<=1000 && newQuantity>0){
+        if (newQuantity<=MAX_QUANTITY && newQuantity>0){
             ConstraintLayout parentRow = (ConstraintLayout) v.getParent();
             numberShown = (TextView)parentRow.getChildAt(indexOfnShown); //numOfItems
             productsList.get(itemIndex).setQuantity(newQuantity);
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Handles the click event on the addBtn, changing the quantity of the product stored in the cart
+     * if it's less that the maximum allowed
      * @param v the button clicked
      */
     public void addBtnHandler(View v){
@@ -99,19 +101,42 @@ public class MainActivity extends AppCompatActivity {
         itemIndex = Integer.parseInt(((TextView)parentRow.getChildAt(9)).getText().toString());
         productId = Integer.parseInt(((TextView)parentRow.getChildAt(11)).getText().toString());
         ArrayList <Integer> itemsOnCart = Product.getIdsOfProducts(selectedProducts);
+        int quantity;
         if (itemsOnCart.contains(productsList.get(itemIndex).getId())){
             int i = itemsOnCart.indexOf(productsList.get(itemIndex).getId());
-            selectedProducts.get(i).setQuantity(selectedProducts.get(i).getQuantity()+productsList.get(itemIndex).getQuantity());
-            eventManager(v, Event.EventCodes.Added,11,true);
+            quantity = selectedProducts.get(i).getQuantity()+productsList.get(itemIndex).getQuantity();
+            if (quantity<=MAX_QUANTITY){
+                selectedProducts.get(i).setQuantity(quantity);
+                eventManager(v, Event.EventCodes.Added,11,true);
+                displayToast(true);
+            }else {
+                selectedProducts.get(i).setQuantity(MAX_QUANTITY);
+                displayToast(false);
+            }
         }else{
-            selectedProducts.add((Product)productsList.get(itemIndex).clone());
-            eventManager(v, Event.EventCodes.FirstAdded,11,true);
-        }
+            quantity = productsList.get(itemIndex).getQuantity();
+            if (quantity<=MAX_QUANTITY) {
+                selectedProducts.add((Product) productsList.get(itemIndex).clone());
+                eventManager(v, Event.EventCodes.FirstAdded, 11, true);
+                displayToast(true);
+            }else {
+                selectedProducts.add((Product) productsList.get(itemIndex).clone());
+                selectedProducts.get(selectedProducts.size()-1).setQuantity(MAX_QUANTITY);
+                displayToast(false);
+            }
 
+        }
+        quantityChange(1, productsList, 6, v);
         yourCart.setText("Your cart ("+selectedProducts.size()+")");
-        Toast.makeText(this,String.format("%d %s(s) added to your cart",
+    }
+
+    public void displayToast(boolean wasAdded){
+        if (wasAdded)
+            Toast.makeText(this,String.format("%d %s(s) added to your cart",
                 productsList.get(itemIndex).getQuantity(),productsList.get(itemIndex).getName()),Toast.LENGTH_SHORT).show();
-        quantityChange(1,productsList,6,v);
+        else
+            Toast.makeText(this,String.format("You cannot add more than %d %ss!",
+                    MAX_QUANTITY, productsList.get(itemIndex).getName()),Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -188,9 +213,9 @@ public class MainActivity extends AppCompatActivity {
      * @param v the button that fires the event
      */
     public void checkCartHandler(View v){
-      eventManager(v, Event.EventCodes.CartChecked,0,false);
-      cartDialog = new CartDialog();
-      cartDialog.show(getSupportFragmentManager(),"");
+        eventManager(v, Event.EventCodes.CartChecked,0,false);
+        cartDialog = new CartDialog();
+        cartDialog.show(getSupportFragmentManager(),"");
     }
 
     /**
