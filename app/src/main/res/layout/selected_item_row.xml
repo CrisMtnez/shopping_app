@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
-    android:layout_width="290dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
@@ -89,28 +90,31 @@
         android:id="@+id/totalPriceOfRowCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintStart_toEndOf="@+id/numberTxtViewCart"
-        app:layout_constraintLeft_toRightOf="@id/numberTxtViewCart"
         android:text="= 1.25€"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/lessbtnCart"
         app:layout_constraintEnd_toStartOf="@+id/removebtnCart"
+        app:layout_constraintLeft_toRightOf="@id/numberTxtViewCart"
+        app:layout_constraintStart_toEndOf="@+id/numberTxtViewCart"
         app:layout_constraintTop_toTopOf="@+id/morebtnCart" />
 
     <ImageButton
         android:id="@+id/removebtnCart"
-        android:layout_width="43dp"
-        android:layout_height="41dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:onClick="removeBtnHandler"
-        app:layout_constraintStart_toEndOf="@+id/totalPriceOfRowCart"
-        app:layout_constraintEnd_toStartOf="@+id/positionOnCart"
-        app:layout_constraintLeft_toRightOf="@id/totalPriceOfRowCart"
         app:layout_constraintBottom_toBottomOf="@+id/totalPriceOfRowCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/totalPriceOfRowCart"
+        app:layout_constraintRight_toRightOf="@id/refTitleTextView"
+        app:layout_constraintStart_toEndOf="@+id/totalPriceOfRowCart"
         app:layout_constraintTop_toTopOf="@+id/totalPriceOfRowCart"
         app:srcCompat="@android:drawable/ic_delete" />
 
@@ -118,37 +122,63 @@
         android:id="@+id/positionOnCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="0"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/removebtnCartCopy"
-        android:layout_width="43dp"
-        android:layout_height="41dp"
-        android:onClick="removeBtnHandler"
-        app:layout_constraintStart_toStartOf="@+id/removebtnCart"
-        app:layout_constraintEnd_toEndOf="@+id/removebtnCart"
-        app:layout_constraintLeft_toLeftOf="@id/removebtnCart"
-        app:layout_constraintBottom_toBottomOf="@+id/removebtnCart"
-        app:layout_constraintTop_toTopOf="@+id/removebtnCart"
-        app:srcCompat="@android:drawable/ic_delete" />
+    <TextView
+        android:id="@+id/refTitleTextView"
+        android:layout_width="25dp"
+        android:layout_height="13dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Ref:"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/refIdTextView"
+        app:layout_constraintTop_toTopOf="@+id/refIdTextView"/>
+
+    <TextView
+        android:id="@+id/refIdTextView"
+        android:layout_width="30dp"
+        android:layout_height="13dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="101"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/divider"
-        android:layout_width="274dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="?android:attr/listDivider"
-        tools:layout_editor_absoluteX="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="97dp" />
 
     <View
         android:id="@+id/divider2"
-        android:layout_width="274dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="?android:attr/listDivider"
-        tools:layout_editor_absoluteX="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="5dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,20 +10,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Custom adapter that manages the secondary listviews of the client's cart
+ */
 public class MiniAdapter extends BaseAdapter {
     ArrayList<Product> list;
     LayoutInflater inflater;
 
     public MiniAdapter(Context context, ArrayList<Product> list) {
         this.inflater = LayoutInflater.from(context);
-        this.list = list;
-    }
-
-    public ArrayList<Product> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<Product> list) {
         this.list = list;
     }
 
@@ -42,6 +37,13 @@ public class MiniAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Gets the listview managed
+     * @param position the position of a row
+     * @param view the row inflated
+     * @param parent the parent ViewGroup
+     * @return view
+     */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         MiniContainer container = null;
@@ -56,23 +58,28 @@ public class MiniAdapter extends BaseAdapter {
             container.lessbtn = view.findViewById(R.id.lessbtnCart);
             container.removebtn = view.findViewById(R.id.removebtnCart);
             container.position = view.findViewById(R.id.positionOnCart);
+            container.productId = view.findViewById(R.id.refIdTextView);
             view.setTag(container);
         } else {
             container = (MiniContainer) view.getTag();
         }
 
         Product p = (Product) getItem(position);
-        container.name.setText(p.name);
-        container.price.setText(String.format("%.2f€", p.price));
+        container.name.setText(p.getName());
+        container.price.setText(String.format("%.2f€", p.getPrice()));
         container.totalPrice.setText(String.format("= %.2f€", p.getTotalPrice()));
-        container.quantity.setText(p.quantity +"");
+        container.quantity.setText(p.getQuantity() +"");
         container.position.setText(position+"");
+        container.productId.setText(p.getId()+"");
 
         return view;
     }
 
+    /**
+     * Contains all the elements from each row
+     */
     class MiniContainer {
-        TextView position, name,price,quantity,totalPrice;
+        TextView position, name,price,quantity,totalPrice,productId;
         ImageButton morebtn,lessbtn,removebtn;
     }
 }

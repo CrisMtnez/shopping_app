@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
+/**
+ * Initial animation at the launch of the app
+ */
 public class Splash extends AppCompatActivity {
 
     @Override

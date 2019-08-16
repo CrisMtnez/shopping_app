@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckOutActivity">
+    tools:context=".CheckOutActivity"
+    android:layout_gravity="center_horizontal">
 
     <ListView
         android:id="@+id/shoppingListFinal"
-        android:layout_width="398dp"
+        android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
@@ -17,7 +18,8 @@
         android:layout_marginRight="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:foregroundGravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/yourCartMsg"
@@ -55,11 +57,10 @@
     <EditText
         android:id="@+id/discountInput"
         android:layout_width="202dp"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:ems="10"
         android:gravity="center"
         android:inputType="none"
-        android:text="discount code"
         android:textColor="#D5D6D6"
         app:layout_constraintStart_toStartOf="@+id/haveDiscount"
         app:layout_constraintTop_toBottomOf="@+id/haveDiscount" />

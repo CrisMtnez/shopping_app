@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Timewax_Assignment</string>
+    <string name="title_activity_thank_you">ThankYou</string>
 </resources>

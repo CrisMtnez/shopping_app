@@ -12,17 +12,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Custom adapter that manages the main listview of the shop
+ */
 public class MyAdapter extends BaseAdapter {
     ArrayList<Product> list;
     Context context;
-//    ArrayList<Product> selectedProducts;
     LayoutInflater inflater;
 
     public MyAdapter(Context context, ArrayList<Product> list) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
-//        this.selectedProducts = list;
     }
 
     @Override
@@ -40,6 +41,13 @@ public class MyAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Gets the listview managed
+     * @param position the position of a row
+     * @param view the row inflated
+     * @param parent the parent ViewGroup
+     * @return view
+     */
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         Container container = null;
@@ -54,26 +62,30 @@ public class MyAdapter extends BaseAdapter {
             container.morebtn = view.findViewById(R.id.morebtn);
             container.lessbtn = view.findViewById(R.id.lessbtn);
             container.addbtn = view.findViewById(R.id.addbtn);
-//            container.addbtn.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.btn_states));
             container.position = view.findViewById(R.id.position);
+            container.productId = view.findViewById(R.id.refIdTextView);
             view.setTag(container); //sets the row container
         } else {
             container = (Container) view.getTag(); //gets the row container
         }
         Product p = (Product) getItem(position);
-        container.photo.setImageResource(p.image);
-        container.name.setText(p.name);
-        container.description.setText(p.description);
-        container.price.setText(String.format("%.2f€", p.price));
-        container.quantity.setText(p.quantity +"");
+        container.photo.setImageResource(p.getImage());
+        container.name.setText(p.getName());
+        container.description.setText(p.getDescription());
+        container.price.setText(String.format("%.2f€", p.getPrice()));
+        container.quantity.setText(p.getQuantity() +"");
         container.position.setText(position+"");
+        container.productId.setText(p.getId()+"");
 
         return view;
     }
 
+    /**
+     * Contains all the elements from each row
+     */
     class Container {
         ImageView photo;
-        TextView position, name,description,price,quantity;
+        TextView productId, position, name,description,price,quantity;
         ImageButton morebtn,lessbtn;
         Button addbtn;
     }
